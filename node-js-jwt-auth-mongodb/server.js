@@ -9,6 +9,11 @@ const app = express();
 var corsOptions = {
   origin: "http://localhost:8081"
 };
+// Create link to Angular build directory
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
+// Rest of server.js code below
 // -------------------- chat socket --------------------------------------
 let http = require('http');
 let server = http.Server(app);
@@ -23,6 +28,7 @@ io.on('connection', (socket) => {
 
   socket.on('new-message', (message) => {
     io.emit('new-message', message);
+    console.log("Successfully emit");
   });
 });
 
